@@ -11,11 +11,7 @@ export default function Nav_bar() {
     // Kiểm tra trạng thái đăng nhập từ localStorage hoặc API
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedIn);
-
-    if (!loggedIn) {
-      router.push('/im_package/Login');
-    }
-  }, [router]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
