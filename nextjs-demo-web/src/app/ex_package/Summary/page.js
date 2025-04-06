@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Nav_bar from "@/app/components/Nav/Nav_bar";
+import SearchBar from '@/app/components/Nav/Search_bar';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
+
 
 export default function Summary() {
   // Khởi tạo các state cần thiết
@@ -252,7 +254,9 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
   };
   return (
     <>
-      <Nav_bar />
+    <Nav_bar />
+    <SearchBar />
+    <div className='ml-[21%] w-[79%] h-full mt-24'>
       <Image
       alt="Mountains"
       src={Background}
@@ -263,7 +267,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
         objectFit: 'cover',
         position: 'fixed',
       }}
-      className="blur-sm absolute w-screen h-screen"
+      className="blur-sm w-full h-full"
     />
 
     {/* Nội dung chính */}
@@ -272,7 +276,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
       animate="visible"
       transition={{ duration: 0.8 }}
       variants={pageVariants}
-      className="relative flex flex-col space-y-4 mt-8 pt-16 w-screen"
+      className="relative flex flex-col space-y-4 mt-8 pt-8 w-full"
     >
       <motion.h1
         className="text-4xl text-blue-500 font-bold my-4 text-center"
@@ -344,7 +348,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
       <div className="flex items-center w-[92%] mx-auto">
       <h2 className="text-2xl font-bold my-4 text-blue-500">Danh sách hàng được xuất</h2>
       <button
-            className="ml-auto style-button"
+            className="ml-auto style-button mr-10"
             onClick={handleGoToDealerPage}>
             Đi tới trang đại lý
           </button>
@@ -454,6 +458,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
         </div>
       )}
     </motion.div>
+    </div>
     </>
   );
 }

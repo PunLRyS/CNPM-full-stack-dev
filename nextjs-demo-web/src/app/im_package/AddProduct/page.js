@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Nav_bar from '@/app/components/Nav/Nav_bar';
+import Search_bar from '@/app/components/Nav/Search_bar';
 import Image from 'next/image';
 import { m, motion } from 'framer-motion';
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
@@ -108,6 +109,8 @@ export default function AddProductPage() {
     return (
       <>
     <Nav_bar />
+    <Search_bar />
+    <div className='ml-[21%] w-[79%] h-full mt-24'>
     <Image
       alt="Mountains"
       src={Background}
@@ -335,6 +338,7 @@ export default function AddProductPage() {
       )}
     </motion.div>
       </motion.div>
+    </div>
       </>
     );
   }

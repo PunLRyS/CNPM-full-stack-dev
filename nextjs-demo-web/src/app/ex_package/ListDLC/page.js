@@ -3,6 +3,7 @@ import React, { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Nav_bar from "@/app/components/Nav/Nav_bar";
+import Search_bar from "@/app/components/Nav/Search_bar";
 import Link from "next/link";
 import Image from 'next/image';
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
@@ -111,7 +112,7 @@ export default function ListDLC() {
 
     try {
       // Gửi yêu cầu POST đến API để lưu đại lý mới
-      const response = await fetch('http://localhost:3000/daily/create', {
+      const response = await fetch('http://localhost:3000/daily', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -281,7 +282,9 @@ export default function ListDLC() {
   };
   return (
     <>
-    <Nav_bar /> 
+    <Nav_bar />
+    <Search_bar />
+    <div className='ml-[21%] w-[79%] h-full mt-24 '>
     <Image
       alt="Mountains"
       src={Background}
@@ -587,6 +590,7 @@ export default function ListDLC() {
         </tbody>
       </motion.table>
     </motion.div>
+    </div>
     </>
   );
 }
