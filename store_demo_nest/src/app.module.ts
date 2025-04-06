@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config'; // Thêm import ConfigModule
+import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,6 +17,11 @@ import { PhieuNhapModule } from './phieu-nhap/phieu-nhap.module';
 import { PhieuXuatDaiLyModule } from './phieu-xuat-dai-ly/phieu-xuat-dai-ly.module';
 import { PhieuXuatHangHoaModule } from './phieu-xuat-hang-hoa/phieu-xuat-hang-hoa.module';
 import { PhieuXuatModule } from './phieu-xuat/phieu-xuat.module';
+import { BillAnalysisModule } from './bill-analysis/bill-analysis.module';
+import { LogManagementMiddleware } from './logs/log-management.middleware';
+import { JwtService } from '@nestjs/jwt';
+import { UserModule } from './user/user.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -46,8 +51,17 @@ import { PhieuXuatModule } from './phieu-xuat/phieu-xuat.module';
     PhieuXuatDaiLyModule,
     PhieuNhapNhaCungCapModule,
     PhieuNhapHangHoaModule,
+    BillAnalysisModule,
+    UserModule,
+    PaymentModule,
   ],
   controllers: [AppController, BillXuatController],
-  providers: [AppService, BillXuatService],
+  providers: [AppService, BillXuatService, JwtService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LogManagementMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}

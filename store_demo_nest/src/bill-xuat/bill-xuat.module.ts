@@ -18,6 +18,6 @@ import { PhieuXuatModule } from 'src/phieu-xuat/phieu-xuat.module';
   ],
   controllers: [BillXuatController],
   providers: [BillXuatService],
-  exports: [BillXuatService, SequelizeModule],
+  exports: [BillXuatService, SequelizeModule.forFeature([BillXuat])],
 })
 export class BillXuatModule {}

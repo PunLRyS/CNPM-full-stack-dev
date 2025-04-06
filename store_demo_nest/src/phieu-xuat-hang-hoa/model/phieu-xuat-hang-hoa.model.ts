@@ -50,5 +50,13 @@ export class PhieuXuatHangHoa extends Model {
 
   @Column({ type: DataType.FLOAT, allowNull: false }) // Giá nhập
   giaNhap: number;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  paymentStatus: string;
+
+  @Column({ type: DataType.FLOAT, allowNull: true })
+  paymentAmount: number;
+
+  @Column({ type: DataType.DATE, allowNull: true })
+  paymentDate: Date;
 }
-//
