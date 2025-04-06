@@ -284,7 +284,7 @@ export default function ListDLC() {
     <>
     <Nav_bar />
     <Search_bar />
-    <div className='ml-[21%] w-[79%] h-full '>
+    <div className='ml-[21%] w-[79%] h-full mt-24 '>
     <Image
       alt="Mountains"
       src={Background}

@@ -78,7 +78,7 @@ const chartConfig = {
       <div className='bg-gray-100 h-full w-full'>
       <Nav_bar />
       <Search_bar />
-<div className="flex gap-4">
+<div className="flex gap-4 mt-24">
       <Card className="ml-[21%] mt-10 w-1/2">
         <CardContent>
         

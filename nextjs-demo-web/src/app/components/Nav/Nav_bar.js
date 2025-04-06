@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Nav_bar() {
   return (
-    <nav className="fixed left-0 w-[20%] h-full bg-white text-blue-900 px-8  z-20 shadow-lg">
+    <nav className="fixed left-0 top-0 w-[20%] h-full bg-white text-blue-900 px-8  z-100 shadow-lg">
 
       <div className="flex items-center mt-6 mb-14 rounded-lg">
         <Image

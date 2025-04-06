@@ -256,7 +256,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
     <>
     <Nav_bar />
     <SearchBar />
-    <div className='ml-[21%] w-[79%] h-full '>
+    <div className='ml-[21%] w-[79%] h-full mt-24'>
       <Image
       alt="Mountains"
       src={Background}

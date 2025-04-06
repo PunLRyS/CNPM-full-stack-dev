@@ -2,7 +2,7 @@
 import React from "react";
 export default function SearchBar() {
   return (
-    <div className="ml-[20%] w-[80%] h-24 flex items-center justify-between bg-white px-4 shadow">
+    <div className="fixed top-0 z-10 ml-[20%] w-[80%] h-24 flex items-center justify-between bg-white px-4 shadow">
       <div className="flex items-center gap-4">
         <div className="relative ml-10">
           <i class="fa-solid fa-2xl fa-magnifying-glass text-blue-900"></i>
