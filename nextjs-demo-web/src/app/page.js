@@ -1,137 +1,358 @@
 "use client";
 import { Inter } from 'next/font/google';
-import Nav_bar from "./components/Nav/Nav_bar";
-import VideoComponent from "./components/VideoComponent";
-import Link from "next/link";
+import VideoComponent from "@/app/components/VideoComponent";
 import { useEffect, useState } from 'react';
+import backgroundsection from '/public/Subdone.svg';
+import logo from '/public/logo-removebg-preview.png';
 import  { motion } from 'framer-motion';
 import Image from 'next/image';
-import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
+import { useRouter } from 'next/navigation'; // Dùng Next router để chuyển trang
 
 // Import font Montserrat from Google Fonts
-const montserrat = Inter({ subsets: ['latin'] }); //import font chữ
-
-
-
+const montserrat = Inter({ subsets: ['latin'] }); 
 // Home page component
 export default function Home() {
-  const [showSecondComponent, setShowSecondComponent] = useState(false); //khai báo trạng thái sử dụng cho accs sự kiện
-  const [searchTerm, setSearchTerm] = useState(''); //khai báo trạng thái sử dụng cho accs sự kiện
+  const router = useRouter();
+const [username, setUsername] = useState('');
+const [password, setPassword] = useState('');
 
-
-
+  const [showSecondComponent, setShowSecondComponent] = useState(false); 
   useEffect(() => {
     // Set a timeout to show the second component after 4 seconds
     const timer = setTimeout(() => {
       setShowSecondComponent(true); //set thời gian hiển thị cho component thứ 2
-    }, 3600);
+    }, 2800);
 
     // Cleanup the timer on component unmount
     return () => clearTimeout(timer);
   }, []);
 
-
+  useEffect(() => {
+    if (showSecondComponent) {
+      const video = document.querySelector("video");
+      if (video) {
+        video.style.display = "none"; 
+      }
+    }
+  }, [showSecondComponent]);
 
   return (
-    <main className="h-screen overflow-auto"> {/* Set height for the parent element */}
+    <main className="h-screen overflow-auto">
       <VideoComponent />
-
-
-      {showSecondComponent && (
-        <Image
-        alt="Mountains"
-        src={Background}
-        placeholder="blur"
-        quality={100}
-        fill
-        sizes="100vw"
-        style={{
-          objectFit: 'cover',
-        }}
-        className="blur-sm"
+{showSecondComponent && (
+  <motion.div 
+    className="flex"
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.5 }}
+  >
+    {/* Background Section */}
+    <motion.div 
+      className="relative top-6 left-10 w-[60%] h-[95%]"
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.2, duration: 1 }}  
+    >
+      <Image
+        className="w-full h-full object-cover rounded-2xl"
+        alt="Background Section"
+        src={backgroundsection}
       />
-      )}
+      <motion.div 
+        className="absolute left-5 top-5 flex items-center space-x-4"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }} 
+      >
+        <Image className="w-20" alt="Logo" src={logo} />
+        <p className="text-4xl font-bold text-white">FRAXA</p>
+      </motion.div>
+      <motion.div 
+        className="absolute left-[-0.5rem] bottom-[-0.5rem]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 2.5 }} 
+      >
+        <p className="text-8xl font-bold text-blue-900">MANAGEMENT</p>
+      </motion.div>
+      <motion.div 
+        className="absolute left-[-0.5rem] bottom-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 2.5}}  
+      >
+        <p className="text-8xl font-bold text-blue-900">PACKAGE</p>
+      </motion.div>
+    </motion.div>
 
-
-      {showSecondComponent && (
-        <motion.div
-        initial={{ y: "-100vw" }}
-        animate={{ y: 0 }}
-        transition={{ type: "tween", duration: 3.0 }}
+    {/* Login Form */}
+    <div className="relative top-6 ml-20 w-[30%] h-auto rounded-2xl">
+      <motion.div 
+        className="relative w-full h-full p-8 bg-blue-900 text-white rounded-2xl"
+        initial={{ x: 50, opacity: 0 }}  
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}  
+      >
+        {/* Close Button */}
+        <div className="absolute top-4 right-4 w-16 h-16 flex items-center justify-center bg-white text-blue-900 font-bold rounded-full cursor-pointer">
+        <i class="fa-solid fa-2xl fa-chevron-right"></i>
+        </div>
+        
+        {/* Heading */}
+        <h2 className="text-5xl font-bold text-center mt-20">WELCOME BACK!</h2>
+        <p className="text-base text-2xl mt-2 text-center">Please enter your details</p>
+        
+        {/* Form */}
+        <form 
+        className="mt-6"
+        onSubmit={async (e) => {
+          e.preventDefault();
+      
+          try {
+            const response = await fetch('http://localhost:3000/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                username: username,
+                password: password,
+              }),
+            });
+      
+            const data = await response.json();
+      
+            if (response.ok) {
+              router.push('/main');
+            } else {
+              alert(data.message || 'Login failed');
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            alert('Something went wrong. Please try again.');
+          }
+        }}
         >
-          <Nav_bar />
-        </motion.div>
-      )}
-
-
-      {showSecondComponent && ( 
-        <div className="flex z-10 relative">
-          <div className={`rounded-b-2xl w-[35%] ml-[10%] mt-[8%] h-[10%] font-bold text-center text-7xl p-4 mr-12 text-blue-800 ${montserrat.className}`}>
-            <motion.div
-              initial={{ x: "-100vw", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ type: "tween", duration: 1.5 }}
-            >
-              Management
-            </motion.div>
+          <label className="block text-base font-medium">Email</label>
+          <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
+            <i className="fa-solid fa-user text-blue-900"></i>
+            <input 
+            type="email" 
+            placeholder="Example@Something.com" 
+            className="w-full outline-none ml-2"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
-          <div className={`bg-gray-400 rounded-2xl w-[35%] mt-[8%] h-[10%] font-bold text-center text-7xl ml-2 p-4 text-white ${montserrat.className}`}>
-            <motion.div
-              initial={{ opacity: 0 }} // Bắt đầu mờ hoàn toàn
-              animate={{ opacity: 1 }} // Hiện rõ
-              transition={{ type: "tween", duration: 2 }} // Thời gian chuyển đổi
-            >
-              Package
-            </motion.div>
+          <label className="block text-base font-medium mt-4">Password</label>
+          <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
+            <i className="fa-solid fa-lock text-blue-900"></i>
+            <input type="password" placeholder="••••••" className="w-full outline-none ml-2"  value={password}  onChange={(e) => setPassword(e.target.value)}/>
           </div>
-        </div>
-      )}
+          
+          <button className="w-full bg-white text-blue-900 py-2 mt-6 rounded-md font-bold">Log In</button>
+        </form>
+      </motion.div>
+    </div>
+  </motion.div>
+)}
 
-      
-      {showSecondComponent && (
-       <div className="rounded-b-2xl rounded-l-2xl w-[85%] mx-auto h-[60%] relative">
-          <div>
-            <motion.div
-            initial={{ y: "-2vw", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: "tween", duration: 2.5 }}
-            >
-              <div className="relative w-[60%] mx-auto mt-6">
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm sản phẩm..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="border border-gray-300 p-2 rounded w-full shadow-lg focus:outline-none focus:border-blue-500 focus:border-2 pl-10"
-                />
-                <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-700"></i>
-              </div>
-            </motion.div>
-            <div className="flex justify-center items-center my-4">
-              <motion.div
-                  initial={{ opacity: 0 }} // Bắt đầu mờ hoàn toàn
-                  animate={{ opacity: 1 }} // Hiện rõ
-                  transition={{ duration: 3 }} // Thời gian chuyển đổi
-                >
-                    <i className="fas fa-box-open fa-4x" style={{ color: "#2638c5" }}></i>
-                </motion.div>
-
-            </div>
-            <p className="text-black text-lg text-center w-[50%] flex justify-center mx-auto ">
-              Inventory management is a crucial process that involves overseeing the flow of goods within a business, from procurement to storage and distribution. It ensures that products are available when needed while preventing overstocking, which can lead to unnecessary costs. 
-            </p>
-          </div>
-
-
-
-          <Link href="/Inventory">
-            <button className="bg-white rounded-xl w-[20%] h-[10%] text-blue-800 font-semibold absolute mt-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center shadow-xl hover:bg-blue-800 hover:text-white">
-              View More
-            </button>
-          </Link>
-        </div>
-      )}
-      
     </main>
   );
 }
+
+
+
+// "use client";
+// import React, { useState, useEffect } from 'react';
+// import { useRouter } from 'next/navigation';
+// import { motion } from 'framer-motion';
+// import Image from 'next/image';
+// import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
+
+// const punycode = require('punycode/');
+
+// const LoginPage = () => {
+//   const [username, setUsername] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [isLogin, setIsLogin] = useState(true);
+//   const [showLogin, setShowLogin] = useState(true); // Thêm trạng thái để kiểm soát hiển thị màn hình đăng nhập
+//   const [isLoggedIn, setIsLoggedIn] = useState(false); // Trạng thái đăng nhập
+//   const router = useRouter();
+
+//   useEffect(() => {
+//     // Kiểm tra trạng thái đăng nhập từ localStorage
+//     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+//     setIsLoggedIn(loggedIn);
+//     if (loggedIn) {
+//       setShowLogin(false); // Ẩn màn hình đăng nhập nếu đã đăng nhập
+//       router.push('/'); // Điều hướng đến trang chính nếu đã đăng nhập
+//     }
+//   }, [router]);
+
+//   const handleLoginSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await fetch('http://localhost:3000/auth/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ username, password }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Login failed');
+//       }
+
+//       const data = await response.json();
+//       localStorage.setItem('token', data.access_token);
+//       localStorage.setItem('isLoggedIn', 'true'); // Lưu trạng thái đăng nhập
+//       setIsLoggedIn(true); // Cập nhật trạng thái đăng nhập
+//       setShowLogin(false); // Ẩn màn hình đăng nhập sau khi đăng nhập thành công
+//       router.push('/'); // Điều hướng đến trang chính sau khi đăng nhập thành công
+//     } catch (error) {
+//       console.error('Error:', error);
+//       alert('Login failed');
+//     }
+//   };
+
+//   const handleRegisterSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await fetch('http://localhost:3000/auth/register', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ username, password }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Registration failed');
+//       }
+
+//       alert('Registration successful');
+//       setIsLogin(true);
+//     } catch (error) {
+//       console.error('Error:', error);
+//       alert('Registration failed');
+//     }
+//   };
+
+//   return (
+//     <>
+//       {showLogin ? (
+//         <>
+//           <Image
+//             alt="Background"
+//             src={Background}
+//             placeholder="blur"
+//             quality={100}
+//             sizes="100vw"
+//             style={{
+//               objectFit: 'cover',
+//               position: 'fixed',
+//             }}
+//             className="blur-sm absolute w-screen h-screen"
+//           />
+//           <motion.div
+//             className="flex relative flex-col space-y-4 mt-8 pt-16"
+//             initial="hidden"
+//             animate="visible"
+//             variants={{
+//               hidden: { opacity: 0, y: 20 },
+//               visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+//             }}
+//           >
+//             <motion.h1
+//               className="text-2xl font-bold mr-4 text-center"
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               transition={{ duration: 0.5 }}
+//             >
+//               {isLogin ? 'Login' : 'Register'}
+//             </motion.h1>
+//             <div className="w-full flex justify-center">
+//               <div className="w-3/5 border-t-2 border-blue-700"></div>
+//             </div>
+//             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+//               {isLogin ? (
+//                 <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
+//                   <label>
+//                     Username:
+//                     <input
+//                       type="text"
+//                       value={username}
+//                       onChange={(e) => setUsername(e.target.value)}
+//                       required
+//                       className="border border-gray-300 p-2 rounded w-full"
+//                     />
+//                   </label>
+//                   <label>
+//                     Password:
+//                     <input
+//                       type="password"
+//                       value={password}
+//                       onChange={(e) => setPassword(e.target.value)}
+//                       required
+//                       className="border border-gray-300 p-2 rounded w-full"
+//                     />
+//                   </label>
+//                   <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full mt-4">
+//                     Login
+//                   </button>
+//                   <p className="text-center mt-4">
+//                     Don't have an account?{' '}
+//                     <button type="button" onClick={() => setIsLogin(false)} className="text-blue-500 underline">
+//                       Register
+//                     </button>
+//                   </p>
+//                 </form>
+//               ) : (
+//                 <form onSubmit={handleRegisterSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
+//                   <label>
+//                     Username:
+//                     <input
+//                       type="text"
+//                       value={username}
+//                       onChange={(e) => setUsername(e.target.value)}
+//                       required
+//                       className="border border-gray-300 p-2 rounded w-full"
+//                     />
+//                   </label>
+//                   <label>
+//                     Password:
+//                     <input
+//                       type="password"
+//                       value={password}
+//                       onChange={(e) => setPassword(e.target.value)}
+//                       required
+//                       className="border border-gray-300 p-2 rounded w-full"
+//                     />
+//                   </label>
+//                   <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full mt-4">
+//                     Register
+//                   </button>
+//                   <p className="text-center mt-4">
+//                     Already have an account?{' '}
+//                     <button type="button" onClick={() => setIsLogin(true)} className="text-blue-500 underline">
+//                       Login
+//                     </button>
+//                   </p>
+//                 </form>
+//               )}
+//             </div>
+//           </motion.div>
+//         </>
+//       ) : (
+//         <div>
+//           {/* Nội dung khác sau khi đăng nhập */}
+//         </div>
+//       )}
+//     </>
+//   );
+// };
+
+// export default LoginPage;

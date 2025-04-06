@@ -1,5 +1,6 @@
 "use client";
 import Nav_bar from '@/app/components/Nav/Nav_bar';
+import Search_bar from '@/app/components/Nav/Search_bar';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -33,6 +34,8 @@ export default function BillProduct() {
   return (
     <>
     <Nav_bar />
+    <Search_bar />
+    <div className='ml-[21%] w-[79%] h-full '>
     <Image
       alt="Mountains"
       src={Background}
@@ -158,6 +161,7 @@ export default function BillProduct() {
       </motion.div>
     )}
   </div>
+</div>
 </div>
     </>
   );
