@@ -8,7 +8,8 @@ import { useMemo, useEffect, useState } from "react";
 import Nav_bar from '../components/Nav/Nav_bar';
 import Search_bar from '../components/Nav/Search_bar';
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Pie, PieChart, Label } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Pie, PieChart, Label,RadialBar,
+    RadialBarChart, PolarRadiusAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -22,14 +23,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-
-const chartConfig = {
-    desktop: {
-      label: "Giá trị hàng hóa",
-      color: "hsl(var(--chart-1))",
-    },
-  };
   
   export default function Component() {
     const [backendProducts, setBackendProducts] = useState([]);
@@ -62,17 +55,87 @@ const chartConfig = {
       return total + (isNaN(itemTotal) ? 0 : itemTotal);
     }, 0);
     
-    const chartData = backendProducts.map(item => ({
-      ten: item.ten,
-    //   itemTotal: item.soLuong * item.giaNhap, 
-    soLuong: item.soLuong, // Số lượng
-      giaNhap: item.giaNhap, // Giá nhập
-    }));
+   
     const tableAnimation = {
       hidden: { opacity: 0, y: 20 },
       visible: { opacity: 1, y: 0, transition: { duration: 1.5 } },
     };
-  
+
+    const [combinedData, setCombinedData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [goodsResponse, dealersResponse] = await Promise.all([
+          fetch('http://localhost:3000/phieu-xuat-hang-hoa/get-du-lieu'),
+          fetch('http://localhost:3000/phieu-xuat-dai-ly/get-du-lieu'),
+        ]);
+
+        if (!goodsResponse.ok || !dealersResponse.ok) {
+          throw new Error('Không thể lấy dữ liệu từ một trong các API');
+        }
+
+        const goodsData = await goodsResponse.json();
+        const dealersData = await dealersResponse.json();
+
+        console.log("Dữ liệu từ API phieu-xuat-hang-hoa/get-du-lieu:", goodsData);
+
+        const enrichedGoodsData = await Promise.all(
+          goodsData.map(async (goodsItem) => {
+            const goodsDetailResponse = await fetch(`http://localhost:3000/hanghoa/find/${goodsItem.maHangHoa}`);
+            const goodsDetailData = goodsDetailResponse.ok ? await goodsDetailResponse.json() : {};
+            return { 
+              ...goodsItem, 
+              tenHangHoa: goodsDetailData.ten || 'Tên không có sẵn',
+            };
+          })
+        );
+
+        const enrichedDealersData = await Promise.all(
+          dealersData.map(async (dealerItem) => {
+            const dealerDetailResponse = await fetch(`http://localhost:3000/daily/get-by-ma/${dealerItem.maDaiLy}`);
+            const dealerDetailData = dealerDetailResponse.ok ? await dealerDetailResponse.json() : {};
+            return { ...dealerItem, ...dealerDetailData };
+          })
+        );
+
+        const combinedData = enrichedGoodsData.map((goodsItem) => {
+          const dealer = enrichedDealersData.find((dealerItem) => dealerItem.maPhieuXuat === goodsItem.maPhieuXuat) || {};
+          return { ...goodsItem, ...dealer };
+        });
+
+        setCombinedData(combinedData);
+      } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Tính tổng doanh thu
+  const totalRevenue = combinedData.reduce((sum, item) => {
+    return sum + (item.soLuong * item.giaNhap);
+  }, 0);
+
+ const chartData = backendProducts.map(item => ({
+      ten: item.ten,
+    soLuong: item.soLuong, // Số lượng
+      giaNhap: item.giaNhap, // Giá nhập
+      tongDoanhThu: totalRevenue, // Tổng doanh thu
+      tonggiaNhap: totalValue,
+    }));
+
+    const chartConfig = {
+        desktop: {
+          label: "Giá trị hàng hóa",
+          color: "hsl(var(--chart-1))",
+        },
+      };
+
+      const totalOrders = combinedData.length;
+      const totalProfit = totalRevenue - totalValue; // Tính tổng lợi nhuận
+      const totalProfitPercentage = ((totalProfit / totalRevenue) * 100).toFixed(2); // Tính phần trăm lợi nhuận
     return (
       <>
       <div className='bg-gray-100 h-full w-full'>
@@ -116,7 +179,7 @@ const chartConfig = {
                 />
                 <YAxis
                   type="number"
-                  domain={['auto', 'auto']}
+                  domain={['auto','auto']}
                   interval="preserveStartEnd"
                   tickFormatter={(tick) => `${tick / 1000}k`}
                 />
@@ -165,18 +228,91 @@ const chartConfig = {
             <div className='w-full h-[50%]'>
                 <Pie_chart />
             </div>
-            <div className="w-full h-[50%] mt-4 bg-white flex items-center justify-between p-4 rounded-lg shadow-md">
+            <div className="w-full h-[50%] mt-4 bg-white flex gap-4 p-4 rounded-lg shadow-md">
                 <img 
-                    src="/path-to-your-bank-card-image.png" 
+                    src="/599d157d5c31ef6fb620.jpg" 
                     alt="Bank Card" 
-                    className="w-16 h-16 object-contain" 
+                    className="w-1/2 h-full object-contain rounded-lg shadow-md" 
                 />
                 
-                {/* Số liệu doanh thu */}
-                <div className="text-xl font-semibold">
-                    <p>Total Revenue</p>
-                    <p className="text-green-500">$12,345.67</p> {/* Bạn có thể thay đổi số liệu này */}
+                <div className="mt-4 ml-6">
+                    <div className='flex'>
+                    <p className='text-2xl font-semibold '>Total Profit</p>
+                    <p className="text-green-500 text-2xl font-semibold text-center ">{totalProfit.toLocaleString()}</p>
+                    </div>
+                    <Card className="flex flex-col shadow-none border-none">
+                        <CardContent className="flex items-center justify-center pb-0 min-h-[50px]">
+                            <ChartContainer
+                            config={chartConfig}
+                            className="w-full max-w-[180px] h-[130px]" // đủ không gian hiển thị
+                            >
+                            <RadialBarChart
+                                data={chartData}
+                                endAngle={180}
+                                innerRadius={50}       
+                                outerRadius={70}    
+                            >
+                                <ChartTooltip
+                                cursor={false}
+                                content={<ChartTooltipContent hideLabel />}
+                                />
+                                <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+                                <Label
+                                    content={({ viewBox }) => {
+                                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                        return (
+                                        <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                                            <tspan
+                                            x={viewBox.cx}
+                                            y={(viewBox.cy || 0) - 16}
+                                            className="fill-foreground text-xl font-bold"
+                                            >
+                                            {totalOrders.toLocaleString()}
+                                            </tspan>
+                                            <tspan
+                                            x={viewBox.cx}
+                                            y={(viewBox.cy || 0) + 10}
+                                            className="fill-muted-foreground text-sm"
+                                            >
+                                            Orders
+                                            </tspan>
+                                        </text>
+                                        );
+                                    }
+                                    return null;
+                                    }}
+                                />
+                                </PolarRadiusAxis>
+
+                                <RadialBar
+                                dataKey="tongDoanhThu"
+                                stackId="a"
+                                cornerRadius={5}
+                                fill="var(--color-desktop)"
+                                className="stroke-transparent stroke-2"
+                                />
+                                <RadialBar
+                                dataKey="tonggiaNhap"
+                                fill="var(--color-mobile)"
+                                stackId="a"
+                                cornerRadius={5}
+                                className="stroke-transparent stroke-2"
+                                />
+                            </RadialBarChart>
+                            </ChartContainer>
+                        </CardContent>
+                        <CardFooter className="flex-col gap-2 text-sm">
+                                <div className="flex items-center gap-2 font-medium leading-none">
+                                {totalProfitPercentage.toLocaleString()}<TrendingUp className="h-4 w-4" />
+                                </div>
+                                <div className="leading-none text-muted-foreground">
+                                  Showing total profit percentage
+                                </div>
+                              </CardFooter>
+                    </Card>
+
                 </div>
+
             </div>
 
         </div>

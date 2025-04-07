@@ -60,6 +60,12 @@ export default function CombinedBillDealerData() {
     fetchData();
   }, []);
 
+  // Tính tổng doanh thu
+  const totalRevenue = combinedData.reduce((sum, item) => {
+    return sum + (item.soLuong * item.giaNhap);
+  }, 0);
+
+
   return (
     <>
     <Nav_bar />
@@ -91,6 +97,9 @@ export default function CombinedBillDealerData() {
         </div>
 
       <div className="w-[95%] mx-auto">
+      <div className="text-xl font-semibold text-green-600 text-center mt-4">
+        Total Revenue: {totalRevenue.toLocaleString()} VND
+      </div>
         {combinedData.length === 0 ? (
           <div className="mt-8 text-center">
             <p className="text-gray-500">Không có dữ liệu để hiển thị.</p>
