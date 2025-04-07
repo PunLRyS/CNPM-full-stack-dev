@@ -7,6 +7,7 @@ import Nav_bar from '@/app/components/Nav/Nav_bar';
 import Search_bar from '@/app/components/Nav/Search_bar';
 import Image from 'next/image';
 import { m, motion } from 'framer-motion';
+import Chatbot from '@/app/components/Chatbot-main';
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
 export default function AddProductPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -338,6 +339,9 @@ export default function AddProductPage() {
       )}
     </motion.div>
       </motion.div>
+      <div className="fixed bottom-0 right-0 m-4 z-50">
+                          <Chatbot />
+                      </div>
     </div>
       </>
     );

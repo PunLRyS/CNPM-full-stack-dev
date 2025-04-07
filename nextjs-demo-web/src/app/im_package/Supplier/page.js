@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Chatbot from "@/app/components/Chatbot-main";
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
 
 export default function Supplier() {
@@ -650,6 +651,9 @@ export default function Supplier() {
       )}
     </motion.div>
 </div>
+<div className="fixed bottom-0 right-0 m-4 z-50">
+                    <Chatbot />
+                </div>
     </div>
     </>
   );

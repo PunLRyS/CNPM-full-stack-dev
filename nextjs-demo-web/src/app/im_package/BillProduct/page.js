@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Chatbot from '@/app/components/Chatbot-main';
 import Background from '/public/Baixar-fundo-abstrato-hexágono_-conceito-poligonal-de-tecnologia-gratuitamente.png';
 
 export default function BillProduct() {
@@ -162,6 +163,9 @@ export default function BillProduct() {
     )}
   </div>
 </div>
+<div className="fixed bottom-0 right-0 m-4 z-50">
+                    <Chatbot />
+                </div>
 </div>
     </>
   );

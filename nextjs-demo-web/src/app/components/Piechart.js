@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { Tablet, TrendingUp } from "lucide-react"
-import { Label, Pie, PieChart, Cell } from "recharts"
+import { Label, Pie, PieChart, Cell, YAxis, Area } from "recharts"
 import { useEffect, useState } from "react"
 
 import {
@@ -153,3 +153,4 @@ const totalValue = backendProducts.reduce((total, item) => {
     </Card>
   )
 }
+

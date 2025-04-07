@@ -396,7 +396,7 @@ const currentPost = posts.find(post => post.id === selectedItem.id);
 
       {/* Popup nhập thông tin xuất hàng */}
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-600 z-10 bg-opacity-50">
           <div className="bg-white p-5 rounded shadow-lg">
             <h2 className="text-lg font-bold mb-4">
               Nhập thông tin xuất hàng cho {selectedItem.ten}
