@@ -22,65 +22,75 @@ import {
 
 
 export default function Component() {
-    const [backendProducts, setBackendProducts] = useState([]);
-      const [loading, setLoading] = useState(true);
-      const [error, setError] = useState(null);
-    
-      useEffect(() => {
-        const fetchProducts = async () => {
-          try {
-            const response = await fetch('http://localhost:3000/hanghoa/get-du-lieu');
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setBackendProducts(data);
-          } catch (error) {
-            setError(error);
-          } finally {
-            setLoading(false);
-          }
-        };
-    
-        fetchProducts();
-      }, []);
-      
-      const chartData = backendProducts.map(item => ({
-          name: item.ten,
-          value: item.soLuong * item.giaNhap, // Giá trị tổng
-        }));
-        const chartConfig = {
-            Products: {
-              label: "Products",
-            },
-            hoa: {
-              label: "Hoa",
-              color: "hsl(210, 100%, 80%)",  // Xanh nước biển tím nhạt
-            },
-            Laptop: {
-              label: "Laptop",
-              color: "hsl(220, 80%, 55%)",  // Xanh nước biển tím tươi
-            },
-            PCgaming: {
-              label: "PCgaming",
-              color: "hsl(230, 70%, 40%)",  // Xanh nước biển tím đậm
-            },
-            Mouse: {
-              label: "Mouse",
-              color: "hsl(240, 90%, 35%)",  // Xanh nước biển tím đậm hơn
-            },
-            Keyboard: {
-              label: "Keyboard",
-              color: "hsl(250, 60%, 70%)",  // Xanh nước biển tím nhẹ
-            },
-            Tablet: {
-              label: "Tablet",
-              color: "hsl(230, 70%, 50%)",  // Xanh nước biển tím trung bình
-            },
-          }
-          
+  const [backendProducts, setBackendProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const totalValue = backendProducts.reduce((total, item) => {
+  const getAuthHeaders = () => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    return {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+  };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/hanghoa/get-du-lieu', {
+          headers: getAuthHeaders(),
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setBackendProducts(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const chartData = backendProducts.map(item => ({
+    name: item.ten,
+    value: item.soLuong * item.giaNhap, // Giá trị tổng
+  }));
+  const chartConfig = {
+    Products: {
+      label: "Products",
+    },
+    hoa: {
+      label: "Hoa",
+      color: "hsl(210, 100%, 80%)",  // Xanh nước biển tím nhạt
+    },
+    Laptop: {
+      label: "Laptop",
+      color: "hsl(220, 80%, 55%)",  // Xanh nước biển tím tươi
+    },
+    PCgaming: {
+      label: "PCgaming",
+      color: "hsl(230, 70%, 40%)",  // Xanh nước biển tím đậm
+    },
+    Mouse: {
+      label: "Mouse",
+      color: "hsl(240, 90%, 35%)",  // Xanh nước biển tím đậm hơn
+    },
+    Keyboard: {
+      label: "Keyboard",
+      color: "hsl(250, 60%, 70%)",  // Xanh nước biển tím nhẹ
+    },
+    Tablet: {
+      label: "Tablet",
+      color: "hsl(230, 70%, 50%)",  // Xanh nước biển tím trung bình
+    },
+  }
+
+
+  const totalValue = backendProducts.reduce((total, item) => {
     const itemTotal = item.soLuong * item.giaNhap;
     return total + (isNaN(itemTotal) ? 0 : itemTotal);
   }, 0);
@@ -103,12 +113,12 @@ const totalValue = backendProducts.reduce((total, item) => {
               innerRadius={60}
               strokeWidth={5}
             >
-                 {chartData.map((entry, index) => (
-    <Cell
-      key={`cell-${index}`}
-      fill={chartConfig[entry.name]?.color || "#ccc"}
-    />
-  ))}
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={chartConfig[entry.name]?.color || "#ccc"}
+                />
+              ))}
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
@@ -144,7 +154,7 @@ const totalValue = backendProducts.reduce((total, item) => {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-        Total value of each item in the warehouse <TrendingUp className="h-4 w-4" />
+          Total value of each item in the warehouse <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
           Showing total visitors for the last 6 months

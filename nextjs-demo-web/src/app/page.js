@@ -4,19 +4,19 @@ import VideoComponent from "@/app/components/VideoComponent";
 import { useEffect, useState } from 'react';
 import backgroundsection from '/public/Subdone.svg';
 import logo from '/public/logo-removebg-preview.png';
-import  { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; // Dùng Next router để chuyển trang
 
 // Import font Montserrat from Google Fonts
-const montserrat = Inter({ subsets: ['latin'] }); 
+const montserrat = Inter({ subsets: ['latin'] });
 // Home page component
 export default function Home() {
   const router = useRouter();
-const [username, setUsername] = useState('');
-const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [showSecondComponent, setShowSecondComponent] = useState(false); 
+  const [showSecondComponent, setShowSecondComponent] = useState(false);
   useEffect(() => {
     // Set a timeout to show the second component after 4 seconds
     const timer = setTimeout(() => {
@@ -31,7 +31,7 @@ const [password, setPassword] = useState('');
     if (showSecondComponent) {
       const video = document.querySelector("video");
       if (video) {
-        video.style.display = "none"; 
+        video.style.display = "none";
       }
     }
   }, [showSecondComponent]);
@@ -39,124 +39,128 @@ const [password, setPassword] = useState('');
   return (
     <main className="h-screen overflow-auto">
       <VideoComponent />
-{showSecondComponent && (
-  <motion.div 
-    className="flex"
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.5 }}
-  >
-    {/* Background Section */}
-    <motion.div 
-      className="relative top-6 left-10 w-[60%] h-[95%]"
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.2, duration: 1 }}  
-    >
-      <Image
-        className="w-full h-full object-cover rounded-2xl"
-        alt="Background Section"
-        src={backgroundsection}
-      />
-      <motion.div 
-        className="absolute left-5 top-5 flex items-center space-x-4"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.8 }} 
-      >
-        <Image className="w-20" alt="Logo" src={logo} />
-        <p className="text-4xl font-bold text-white">FRAXA</p>
-      </motion.div>
-      <motion.div 
-        className="absolute left-[-0.5rem] bottom-[-0.5rem]"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 2.5 }} 
-      >
-        <p className="text-8xl font-bold text-blue-900">MANAGEMENT</p>
-      </motion.div>
-      <motion.div 
-        className="absolute left-[-0.5rem] bottom-20"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 2.5}}  
-      >
-        <p className="text-8xl font-bold text-blue-900">PACKAGE</p>
-      </motion.div>
-    </motion.div>
-
-    {/* Login Form */}
-    <div className="relative top-6 ml-20 w-[30%] h-auto rounded-2xl">
-      <motion.div 
-        className="relative w-full h-full p-8 bg-blue-900 text-white rounded-2xl"
-        initial={{ x: 50, opacity: 0 }}  
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}  
-      >
-        {/* Close Button */}
-        <div className="absolute top-4 right-4 w-16 h-16 flex items-center justify-center bg-white text-blue-900 font-bold rounded-full cursor-pointer">
-        <i class="fa-solid fa-2xl fa-chevron-right"></i>
-        </div>
-        
-        {/* Heading */}
-        <h2 className="text-5xl font-bold text-center mt-20">WELCOME BACK!</h2>
-        <p className="text-base text-2xl mt-2 text-center">Please enter your details</p>
-        
-        {/* Form */}
-        <form 
-        className="mt-6"
-        onSubmit={async (e) => {
-          e.preventDefault();
-      
-          try {
-            const response = await fetch('http://localhost:3000/auth/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                username: username,
-                password: password,
-              }),
-            });
-      
-            const data = await response.json();
-      
-            if (response.ok) {
-              router.push('/main');
-            } else {
-              alert(data.message || 'Login failed');
-            }
-          } catch (error) {
-            console.error('Login error:', error);
-            alert('Something went wrong. Please try again.');
-          }
-        }}
+      {showSecondComponent && (
+        <motion.div
+          className="flex"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5 }}
         >
-          <label className="block text-base font-medium">Email</label>
-          <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
-            <i className="fa-solid fa-user text-blue-900"></i>
-            <input 
-            type="email" 
-            placeholder="Example@Something.com" 
-            className="w-full outline-none ml-2"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+          {/* Background Section */}
+          <motion.div
+            className="relative top-6 left-10 w-[60%] h-[95%]"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 1 }}
+          >
+            <Image
+              className="w-full h-full object-cover rounded-2xl"
+              alt="Background Section"
+              src={backgroundsection}
             />
+            <motion.div
+              className="absolute left-5 top-5 flex items-center space-x-4"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              <Image className="w-20" alt="Logo" src={logo} />
+              <p className="text-4xl font-bold text-white">FRAXA</p>
+            </motion.div>
+            <motion.div
+              className="absolute left-[-0.5rem] bottom-[-0.5rem]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 2.5 }}
+            >
+              <p className="text-8xl font-bold text-blue-900">MANAGEMENT</p>
+            </motion.div>
+            <motion.div
+              className="absolute left-[-0.5rem] bottom-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 2.5 }}
+            >
+              <p className="text-8xl font-bold text-blue-900">PACKAGE</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Login Form */}
+          <div className="relative top-6 ml-20 w-[30%] h-auto rounded-2xl">
+            <motion.div
+              className="relative w-full h-full p-8 bg-blue-900 text-white rounded-2xl"
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
+              {/* Close Button */}
+              <div className="absolute top-4 right-4 w-16 h-16 flex items-center justify-center bg-white text-blue-900 font-bold rounded-full cursor-pointer">
+                <i class="fa-solid fa-2xl fa-chevron-right"></i>
+              </div>
+
+              {/* Heading */}
+              <h2 className="text-5xl font-bold text-center mt-20">WELCOME BACK!</h2>
+              <p className="text-base text-2xl mt-2 text-center">Please enter your details</p>
+
+              {/* Form */}
+              <form
+                className="mt-6"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+
+                  try {
+                    const response = await fetch('http://localhost:3000/auth/login', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        username: username,
+                        password: password,
+                      }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                      const token = data?.accessToken || data?.access_token;
+                      if (token) {
+                        localStorage.setItem('token', token);
+                      }
+                      router.push('/main');
+                    } else {
+                      alert(data.message || 'Login failed');
+                    }
+                  } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Something went wrong. Please try again.');
+                  }
+                }}
+              >
+                <label className="block text-base font-medium">Email</label>
+                <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
+                  <i className="fa-solid fa-user text-blue-900"></i>
+                  <input
+                    type="email"
+                    placeholder="Example@Something.com"
+                    className="w-full outline-none ml-2"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <label className="block text-base font-medium mt-4">Password</label>
+                <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
+                  <i className="fa-solid fa-lock text-blue-900"></i>
+                  <input type="password" placeholder="••••••" className="w-full outline-none ml-2" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+
+                <button className="w-full bg-white text-blue-900 py-2 mt-6 rounded-md font-bold">Log In</button>
+              </form>
+            </motion.div>
           </div>
-          <label className="block text-base font-medium mt-4">Password</label>
-          <div className="flex items-center bg-white p-2 rounded-md text-black mt-1">
-            <i className="fa-solid fa-lock text-blue-900"></i>
-            <input type="password" placeholder="••••••" className="w-full outline-none ml-2"  value={password}  onChange={(e) => setPassword(e.target.value)}/>
-          </div>
-          
-          <button className="w-full bg-white text-blue-900 py-2 mt-6 rounded-md font-bold">Log In</button>
-        </form>
-      </motion.div>
-    </div>
-  </motion.div>
-)}
+        </motion.div>
+      )}
 
     </main>
   );
