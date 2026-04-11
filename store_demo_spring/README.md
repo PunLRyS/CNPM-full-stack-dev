@@ -6,7 +6,7 @@ Spring Boot backend created to migrate from `store_demo_nest`.
 
 - Project skeleton with Maven + Java 17.
 - PostgreSQL + JPA configuration.
-- JWT authentication (`/auth/login`, `/auth/register`, `/auth/protected`).
+- Basic authentication endpoints (`/auth/login`, `/auth/register`) without JWT token flow.
 - `hanghoa` CRUD endpoints matching NestJS routes.
 - `daily` CRUD + search endpoints matching NestJS routes.
 - `nha-cung-cap` CRUD + find-by-ma endpoints matching NestJS routes.
@@ -14,8 +14,6 @@ Spring Boot backend created to migrate from `store_demo_nest`.
 - `phieu-xuat-hang-hoa` and `phieu-xuat-dai-ly` read endpoints.
 - `phieu-nhap` CRUD basics with `phieu-nhap-hang-hoa` relation persistence.
 - `phieu-nhap-hang-hoa` and `phieu-nhap-nha-cung-cap` read endpoints.
-- `bill-xuat` create + total calculation endpoints.
-- `bill-nhap` create + total calculation endpoints.
 - Transaction boundaries for major write flows (`phieu-xuat`, `phieu-nhap`, `daily`).
 - Unified error JSON format via global exception handler.
 - Swagger UI at `/api`.
@@ -27,7 +25,6 @@ Spring Boot backend created to migrate from `store_demo_nest`.
    - `SPRING_DATASOURCE_URL`
    - `SPRING_DATASOURCE_USERNAME`
    - `SPRING_DATASOURCE_PASSWORD`
-   - `JWT_SECRET` (at least 32 chars)
 3. Start app:
 
 ```bash

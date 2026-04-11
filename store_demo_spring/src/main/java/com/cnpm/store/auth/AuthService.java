@@ -3,7 +3,6 @@ package com.cnpm.store.auth;
 import com.cnpm.store.auth.dto.AuthResponse;
 import com.cnpm.store.auth.dto.LoginRequest;
 import com.cnpm.store.auth.dto.RegisterRequest;
-import com.cnpm.store.security.JwtService;
 import com.cnpm.store.user.UserEntity;
 import com.cnpm.store.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -16,24 +15,21 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
     }
 
     public AuthResponse login(LoginRequest request) {
         UserEntity user = userRepository.findByUsername(request.getUsername())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        String token = jwtService.generateToken(user.getId(), user.getUsername());
-        return new AuthResponse(token);
+        return new AuthResponse("Login successful");
     }
 
     public UserEntity register(RegisterRequest request) {

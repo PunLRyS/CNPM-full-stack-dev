@@ -7,12 +7,10 @@ com\cnpm\store\hanghoa\dto\CreateHangHoaRequest.class
 com\cnpm\store\phieuxuat\PhieuXuatHangHoaController.class
 com\cnpm\store\phieunhap\PhieuNhapController.class
 com\cnpm\store\phieuxuat\PhieuXuatDaiLyEntity.class
-com\cnpm\store\billnhap\BillNhapRepository.class
 com\cnpm\store\StoreDemoApplication.class
 com\cnpm\store\config\SecurityConfig.class
 com\cnpm\store\phieuxuat\PhieuXuatController.class
 com\cnpm\store\phieunhap\PhieuNhapNhaCungCapEntity.class
-com\cnpm\store\billnhap\BillNhapService.class
 com\cnpm\store\phieuxuat\PhieuXuatService.class
 com\cnpm\store\user\UserEntity.class
 com\cnpm\store\auth\dto\RegisterRequest.class
@@ -21,8 +19,6 @@ com\cnpm\store\phieunhap\dto\CreatePhieuNhapHangHoaRequest.class
 com\cnpm\store\phieunhap\PhieuNhapNhaCungCapController.class
 com\cnpm\store\common\ApiError.class
 com\cnpm\store\phieuxuat\dto\CreatePhieuXuatHangHoaRequest.class
-com\cnpm\store\billxuat\BillXuatEntity.class
-com\cnpm\store\billxuat\BillXuatRepository.class
 com\cnpm\store\common\GlobalExceptionHandler.class
 com\cnpm\store\daily\DaiLyService.class
 com\cnpm\store\hanghoa\HangHoaController.class
@@ -33,16 +29,14 @@ com\cnpm\store\daily\dto\CreateDaiLyRequest.class
 com\cnpm\store\phieuxuat\PhieuXuatDaiLyRepository.class
 com\cnpm\store\phieuxuat\PhieuXuatDaiLyController.class
 com\cnpm\store\auth\dto\LoginRequest.class
-com\cnpm\store\billxuat\BillXuatService.class
 com\cnpm\store\daily\dto\UpdateDaiLyRequest.class
 com\cnpm\store\phieunhap\PhieuNhapService.class
+com\cnpm\store\config\OpenApiConfig.class
 com\cnpm\store\hanghoa\HangHoaService.class
 com\cnpm\store\phieuxuat\PhieuXuatDaiLyService.class
 com\cnpm\store\nhacungcap\dto\UpdateNhaCungCapRequest.class
 com\cnpm\store\phieunhap\PhieuNhapNhaCungCapService.class
 com\cnpm\store\phieuxuat\PhieuXuatHangHoaEntity.class
-com\cnpm\store\billxuat\BillXuatController.class
-com\cnpm\store\billnhap\BillNhapController.class
 com\cnpm\store\phieunhap\PhieuNhapHangHoaService.class
 com\cnpm\store\phieunhap\PhieuNhapRepository.class
 com\cnpm\store\user\UserRepository.class
@@ -52,7 +46,6 @@ com\cnpm\store\phieuxuat\dto\CreatePhieuXuatRequest.class
 com\cnpm\store\hanghoa\dto\UpdateHangHoaRequest.class
 com\cnpm\store\auth\dto\AuthResponse.class
 com\cnpm\store\phieunhap\PhieuNhapNhaCungCapRepository.class
-com\cnpm\store\security\JwtService.class
 com\cnpm\store\nhacungcap\NhaCungCapController.class
 com\cnpm\store\hanghoa\HangHoaEntity.class
 com\cnpm\store\phieunhap\PhieuNhapHangHoaEntity.class
@@ -60,9 +53,7 @@ com\cnpm\store\phieuxuat\PhieuXuatHangHoaRepository.class
 com\cnpm\store\nhacungcap\NhaCungCapEntity.class
 com\cnpm\store\daily\dto\CreatePhieuXuatDaiLyRequest.class
 com\cnpm\store\phieuxuat\PhieuXuatEntity.class
-com\cnpm\store\config\JwtAuthFilter.class
 com\cnpm\store\daily\DaiLyEntity.class
-com\cnpm\store\billnhap\BillNhapEntity.class
 com\cnpm\store\phieunhap\PhieuNhapHangHoaController.class
 com\cnpm\store\phieunhap\PhieuNhapHangHoaRepository.class
 com\cnpm\store\phieuxuat\PhieuXuatHangHoaService.class

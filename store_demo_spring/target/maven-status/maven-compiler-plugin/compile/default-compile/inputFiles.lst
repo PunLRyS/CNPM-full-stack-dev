@@ -3,17 +3,8 @@ C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\c
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\auth\dto\AuthResponse.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\auth\dto\LoginRequest.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\auth\dto\RegisterRequest.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billnhap\BillNhapController.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billnhap\BillNhapEntity.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billnhap\BillNhapRepository.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billnhap\BillNhapService.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billxuat\BillXuatController.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billxuat\BillXuatEntity.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billxuat\BillXuatRepository.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\billxuat\BillXuatService.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\common\ApiError.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\common\GlobalExceptionHandler.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\config\JwtAuthFilter.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\config\OpenApiConfig.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\config\SecurityConfig.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\daily\DaiLyController.java
@@ -63,7 +54,6 @@ C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\c
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\phieuxuat\PhieuXuatHangHoaService.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\phieuxuat\PhieuXuatRepository.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\phieuxuat\PhieuXuatService.java
-C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\security\JwtService.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\StoreDemoApplication.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\user\UserEntity.java
 C:\Users\Admin\Desktop\CNPM-full-stack-dev\store_demo_spring\src\main\java\com\cnpm\store\user\UserRepository.java

@@ -2,20 +2,20 @@ package com.cnpm.store.auth.dto;
 
 public class AuthResponse {
 
-    private String accessToken;
+    private String message;
 
     public AuthResponse() {
     }
 
-    public AuthResponse(String accessToken) {
-        this.accessToken = accessToken;
+    public AuthResponse(String message) {
+        this.message = message;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getMessage() {
+        return message;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
